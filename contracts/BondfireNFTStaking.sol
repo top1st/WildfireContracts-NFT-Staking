@@ -189,5 +189,9 @@ contract BondfireNFTStaking is Initializable, UUPSUpgradeable, Ownable {
         totalBtc = btc.balanceOf(address(this));
     }
 
+    function stopStaking(address to) external onlyOwner {
+        btc.transfer(to, btc.balanceOf(address(this)));
+    }
+
     function _authorizeUpgrade(address) internal override onlyOwner {}
 }
