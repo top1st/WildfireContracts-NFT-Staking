@@ -10,8 +10,6 @@ import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 
 
 contract BondfireNFTStaking is Initializable, UUPSUpgradeable, Ownable {
-    IERC20 public constant fire =
-        IERC20(0xC2F7F1f93104eE64b192ED61c9872AcDbbD9D45D);
     IERC20 public constant btc =
         IERC20(0xb17D901469B9208B17d916112988A3FeD19b5cA1);
     IERC721 public constant nft =
@@ -24,7 +22,6 @@ contract BondfireNFTStaking is Initializable, UUPSUpgradeable, Ownable {
         uint positionId;
         uint amount;
         uint rewardDebt;
-        uint maxAmount;
         uint registerAt;
         uint endAt;
         uint reward;
