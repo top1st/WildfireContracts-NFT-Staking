@@ -130,10 +130,9 @@ contract BondfireNFTStaking is Initializable, UUPSUpgradeable, Ownable {
             user.reward += reward;
 
             btc.transfer(msg.sender, reward);
-        } else {
-            user.rewardDebt = accPerShare * user.amount;
-        }
+        } 
         user.amount = user.amount + amount;
+        user.rewardDebt = accPerShare * user.amount;
         totalInStake += amount;
         require(user.amount <= user.maxAmount, "Exceed MaxAmount");
         emit Deposit(msg.sender, user.positionId, amount);
@@ -181,6 +180,13 @@ contract BondfireNFTStaking is Initializable, UUPSUpgradeable, Ownable {
             }
             emit Claim(msg.sender, user.positionId, reward);
         }
+    }
+
+    function _resetStaking() external onlyOwner {
+        require(nft.balanceOf(address(this)) == 0, "Pending clearance");
+        accPerShare = 0;
+        totalInStake = 0;
+        totalBtc = btc.balanceOf(address(this));
     }
 
     function _authorizeUpgrade(address) internal override onlyOwner {}
